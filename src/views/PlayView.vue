@@ -13,10 +13,3 @@ import { useShuffleStore } from "@/stores/shuffle";
 
 const shuffleStore = useShuffleStore();
 </script>
-
-<style scoped>
-.fill-height > * {
-  flex-grow: 1;
-  padding: 5em 0;
-}
-</style>

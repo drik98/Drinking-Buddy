@@ -6,7 +6,14 @@ export const useShuffleStore = defineStore("shuffle", () => {
   const shuffleCount = ref(0);
 
   function shuffle() {
+    let counter = 0;
     shuffleCount.value++;
+    const interval = setInterval(() => {
+      shuffleCount.value++;
+      if (++counter >= 3) {
+        clearTimeout(interval);
+      }
+    }, 1000);
   }
 
   const shuffledPlayers = computed((): string[] => {
