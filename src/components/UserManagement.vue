@@ -17,7 +17,7 @@ import { usePlayerStore } from "@/stores/player";
 
 const playerStore = usePlayerStore();
 
-const savedPlayers = JSON.parse(localStorage.getItem("players"));
+const savedPlayers = JSON.parse(localStorage.getItem("players") || "[]");
 const initalPlayers =
   savedPlayers?.length > 0
     ? savedPlayers

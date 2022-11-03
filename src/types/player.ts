@@ -1,4 +1,4 @@
 export default interface Player {
-  name: String; //unique
+  name: string; //unique
   isActive: Boolean;
 }

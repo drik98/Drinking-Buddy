@@ -4,20 +4,19 @@ import type Player from "@/types/player";
 import { usePlayerStore } from "@/stores/player";
 
 export const useShuffleStore = defineStore("shuffle", () => {
-  const playerStore = usePlayerStore();
-
   const shuffleCount = ref(0);
 
   function shuffle() {
     shuffleCount.value++;
   }
 
-  const shuffledPlayers = computed((): Player[] => {
+  const shuffledPlayers = computed((): string[] => {
     if (shuffleCount.value < 0) {
       return [];
     }
 
-    const playerNames = [...playerStore.playerNames];
+    const playerStore = usePlayerStore();
+    const playerNames: string[] = [...playerStore.playerNames];
 
     for (let i = playerNames.length - 1; i > 0; i--) {
       const randomIndex = Math.floor(Math.random() * i);
