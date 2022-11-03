@@ -31,7 +31,7 @@ const emit = defineEmits<{
       mainColor="#3b7181"
       @timeElapsed="handleElapsed"
     />
-    <div class="d-flex">
+    <div class="d-flex mt-2">
       <v-btn @click="resetTimer" color="primary" class="ma-1">
         <template v-if="isTimerRunning">
           <v-icon start icon="mdi-timer-refresh"></v-icon>

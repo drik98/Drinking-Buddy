@@ -7,6 +7,8 @@ const playerStore = usePlayerStore();
 const shuffleStore = useShuffleStore();
 const newUserName = ref("");
 
+const isPrisitine = ref(true);
+
 function handleNewUserName() {
   if (
     existsPlayerValidator(newUserName.value) !== true ||
@@ -16,6 +18,7 @@ function handleNewUserName() {
   }
   playerStore.addPlayer(newUserName.value.trim());
   newUserName.value = "";
+  isPrisitine.value = true;
 }
 
 function existsPlayerValidator(input) {
@@ -26,7 +29,7 @@ function existsPlayerValidator(input) {
 }
 
 function isValidNameValidator(input) {
-  if (input.trim().length === 0) {
+  if (!isPrisitine.value && input.trim().length === 0) {
     return "Name must not me empty.";
   }
   return true;
@@ -76,6 +79,7 @@ function isValidNameValidator(input) {
         type="text"
         :rules="[existsPlayerValidator, isValidNameValidator]"
         @click:append="handleNewUserName"
+        @update:modelValue="isPrisitine = false"
         @keydown.enter="handleNewUserName"
       ></v-text-field>
     </v-card-actions>

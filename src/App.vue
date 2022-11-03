@@ -12,7 +12,7 @@
       </template>
 
       <v-app-bar-title
-        >Maries Birthday Present(s): Drinking Buddy
+        >Marie's Birthday Present(s): Drinking Buddy
       </v-app-bar-title>
     </v-app-bar>
     <v-main>
