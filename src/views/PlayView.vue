@@ -1,13 +1,11 @@
 <template>
   <v-container class="fill-height d-flex flex-column justify-space-around">
-    <UserManagement />
     <CountdownHandler @startShuffling="shuffleStore.shuffle" />
     <PlayerShuffler />
   </v-container>
 </template>
 
 <script setup lang="ts">
-import UserManagement from "@/components/UserManagement.vue";
 import CountdownHandler from "@/components/CountdownHandler.vue";
 import PlayerShuffler from "@/components/PlayerShuffler.vue";
 

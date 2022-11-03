@@ -1,43 +1,41 @@
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
-import type Player from "@/types/player";
-import { useShuffleStore } from "@/stores/shuffle";
 
 export const usePlayerStore = defineStore("player", () => {
-  const shuffleStore = useShuffleStore();
-
-  const players = ref<Player[]>([]);
-
-  const activePlayerNames = computed({
-    get: (): string[] =>
-      players.value
-        .filter(({ isActive }) => isActive)
-        .map(({ name }) => name) as string[],
-    set: (names: string[]) => {
-      names.forEach((name) => addPlayer(name));
-      players.value = players.value.map((player: Player) => {
-        player.isActive = names.includes(player.name);
-        return player;
-      });
-      shuffleStore.shuffle();
-    },
-  });
-
-  const playerNames = computed(() => players.value.map(({ name }) => name));
+  const players = ref<string[]>(loadPlayers());
 
   function addPlayer(name: string) {
     if (existsPlayer(name)) {
       return;
     }
-    players.value.push({
-      name,
-      isActive: true,
-    });
+    players.value.push(name);
+    persistPlayers();
+  }
+
+  function removePlayer(name: string) {
+    players.value = players.value.filter((playerName) => playerName !== name);
+    persistPlayers();
   }
 
   function existsPlayer(name: string) {
-    return playerNames.value.includes(name);
+    return players.value.includes(name);
   }
 
-  return { players, playerNames, activePlayerNames, addPlayer };
+  function persistPlayers() {
+    localStorage.setItem("players", JSON.stringify(players.value));
+  }
+
+  function loadPlayers() {
+    const persistedPlayers = JSON.parse(
+      localStorage.getItem("players") || "[]"
+    );
+
+    const initalPlayers =
+      persistedPlayers?.length > 0
+        ? persistedPlayers
+        : ["Marie", "Anna H.", "Tom", "Anna P.", "Hendrik", "Anna S.", "Lars"];
+    return initalPlayers;
+  }
+
+  return { players, addPlayer, removePlayer, existsPlayer };
 });
