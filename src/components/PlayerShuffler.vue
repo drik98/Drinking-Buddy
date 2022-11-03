@@ -47,9 +47,14 @@ function isValidNameValidator(input) {
         class="player-container d-flex flex-wrap"
       >
         <div
-          v-for="playerName in shuffleStore.shuffledPlayers"
+          v-for="(playerName, index) in shuffleStore.shuffledPlayers"
           :key="playerName"
           class="player"
+          :class="{
+            'player--single':
+              index === shuffleStore.shuffledPlayers.length - 1 &&
+              shuffleStore.shuffledPlayers.length % 2 !== 0,
+          }"
         >
           <v-chip
             color="primary"
@@ -92,8 +97,6 @@ function isValidNameValidator(input) {
 }
 
 .player-container {
-  row-gap: 1em;
-  column-gap: 0.5em;
   justify-content: center;
 }
 
@@ -101,9 +104,15 @@ function isValidNameValidator(input) {
   width: 40%;
   display: flex;
   justify-content: flex-end;
+  margin: 0.75em 0.1em;
 }
 
 .player:nth-child(2n) {
   justify-content: flex-start;
+}
+
+.player--single {
+  justify-content: center;
+  margin-top: -0.5em;
 }
 </style>
