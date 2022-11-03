@@ -6,6 +6,7 @@ import { usePlayerStore } from "@/stores/player";
 const playerStore = usePlayerStore();
 const shuffleStore = useShuffleStore();
 const newUserName = ref("");
+const snackBarText = ref("");
 
 const isPrisitine = ref(true);
 
@@ -34,11 +35,22 @@ function isValidNameValidator(input) {
   }
   return true;
 }
+
+function showRandomDrinkBuddy(name) {
+  snackBarText.value = `The drinking buddy for ${name} is: ${shuffleStore.getRandomDrinkingBuddy(
+    name
+  )}`;
+}
 </script>
 
 <template>
   <v-card variant="outlined">
     <template v-slot:title>Drinking Buddies</template>
+    <template v-slot:subtitle
+      >Click on a player to get an additional Drinking Buddy!</template
+    >
+
+    <v-divider></v-divider>
 
     <template v-slot:text>
       <transition-group
@@ -60,6 +72,7 @@ function isValidNameValidator(input) {
             color="primary"
             label
             closable
+            @click="showRandomDrinkBuddy(playerName)"
             @click:close="playerStore.removePlayer(playerName)"
           >
             <v-icon start icon="mdi-account-circle-outline"></v-icon>
@@ -89,6 +102,10 @@ function isValidNameValidator(input) {
       ></v-text-field>
     </v-card-actions>
   </v-card>
+
+  <v-snackbar v-if="snackBarText" v-model="snackBarText" :timeout="10000">
+    {{ snackBarText }}
+  </v-snackbar>
 </template>
 
 <style scoped>

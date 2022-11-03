@@ -35,5 +35,14 @@ export const useShuffleStore = defineStore("shuffle", () => {
     return playerNames;
   });
 
-  return { shuffleCount, shuffle, shuffledPlayers };
+  function getRandomDrinkingBuddy(name) {
+    const playerStore = usePlayerStore();
+    const playerNames: string[] = [...playerStore.players].filter(
+      (playerName) => playerName !== name
+    );
+
+    return playerNames[Math.floor(Math.random() * playerNames.length - 1)];
+  }
+
+  return { shuffleCount, shuffle, shuffledPlayers, getRandomDrinkingBuddy };
 });

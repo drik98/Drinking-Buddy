@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height d-flex flex-column justify-space-around">
-    <CountdownHandler @startShuffling="shuffleStore.shuffle" />
+    <CountdownHandler class="mb-1" @startShuffling="shuffleStore.shuffle" />
     <PlayerShuffler />
   </v-container>
 </template>
