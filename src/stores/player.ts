@@ -70,8 +70,6 @@ export const usePlayerStore = defineStore("player", () => {
       .sort((a, b) => a.sort - b.sort)
       .map(({ value }) => value);
 
-    console.log(shuffledOrderNumbers);
-
     for (let index = 0; index < players.value.length; index++) {
       const playerRef = doc(DB, "players", players.value[index].id);
 

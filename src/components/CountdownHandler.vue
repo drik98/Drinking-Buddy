@@ -3,16 +3,12 @@ import { ref } from "vue";
 import { addMinutes } from "date-fns";
 import { Countdown } from "vue3-flip-countdown";
 
-const timer = ref(new Date().toISOString());
-const isTimerRunning = ref(false);
+import { useCountdownStore } from "@/stores/countdown";
 
-function resetTimer() {
-  isTimerRunning.value = true;
-  timer.value = addMinutes(new Date(), 5).toISOString();
-}
+const countdownStore = useCountdownStore();
 
 function handleElapsed() {
-  isTimerRunning.value = false;
+  countdownStore.resetTimer();
   emit("startShuffling");
 }
 
@@ -24,16 +20,16 @@ const emit = defineEmits<{
 <template>
   <div class="d-flex flex-column align-center">
     <Countdown
-      :key="timer"
-      :deadlineISO="timer"
+      :key="countdownStore.deadline"
+      :deadlineISO="countdownStore.deadline"
       :showDays="false"
       :showHours="false"
       mainColor="#3b7181"
       @timeElapsed="handleElapsed"
     />
     <div class="d-flex mt-2">
-      <v-btn @click="resetTimer" color="primary" class="ma-1">
-        <template v-if="isTimerRunning">
+      <v-btn @click="countdownStore.resetTimer" color="primary" class="ma-1">
+        <template v-if="countdownStore.isTimerRunning">
           <v-icon start icon="mdi-timer-refresh"></v-icon>
           Reset
         </template>
