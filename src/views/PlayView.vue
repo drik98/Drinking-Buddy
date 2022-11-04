@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height d-flex flex-column justify-space-around">
-    <CountdownHandler class="mb-1" @startShuffling="shuffleStore.shuffle" />
+    <CountdownHandler class="mb-1" @startShuffling="playerStore.shuffle" />
     <PlayerShuffler />
   </v-container>
 </template>
@@ -9,7 +9,7 @@
 import CountdownHandler from "@/components/CountdownHandler.vue";
 import PlayerShuffler from "@/components/PlayerShuffler.vue";
 
-import { useShuffleStore } from "@/stores/shuffle";
+import { usePlayerStore } from "@/stores/player";
 
-const shuffleStore = useShuffleStore();
+const playerStore = usePlayerStore();
 </script>

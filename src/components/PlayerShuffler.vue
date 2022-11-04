@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useShuffleStore } from "@/stores/shuffle";
 import { usePlayerStore } from "@/stores/player";
 
 const playerStore = usePlayerStore();
-const shuffleStore = useShuffleStore();
 const newUserName = ref("");
 const snackBarText = ref("");
 
@@ -36,10 +34,10 @@ function isValidNameValidator(input) {
   return true;
 }
 
-function showRandomDrinkBuddy(name) {
-  snackBarText.value = `The drinking buddy for ${name} is: ${shuffleStore.getRandomDrinkingBuddy(
-    name
-  )}`;
+function showRandomDrinkBuddy(player) {
+  snackBarText.value = `The drinking buddy for ${player.name} is: ${
+    playerStore.getRandomDrinkingBuddy(player).name
+  }`;
 }
 </script>
 
@@ -59,24 +57,24 @@ function showRandomDrinkBuddy(name) {
         class="player-container d-flex flex-wrap"
       >
         <div
-          v-for="(playerName, index) in shuffleStore.shuffledPlayers"
-          :key="playerName"
+          v-for="(player, index) in playerStore.players"
+          :key="player.id"
           class="player"
           :class="{
             'player--single':
-              index === shuffleStore.shuffledPlayers.length - 1 &&
-              shuffleStore.shuffledPlayers.length % 2 !== 0,
+              index === playerStore.players.length - 1 &&
+              playerStore.players.length % 2 !== 0,
           }"
         >
           <v-chip
             color="primary"
             label
             closable
-            @click="showRandomDrinkBuddy(playerName)"
-            @click:close="playerStore.removePlayer(playerName)"
+            @click="showRandomDrinkBuddy(player)"
+            @click:close="playerStore.removePlayer(player)"
           >
             <v-icon start icon="mdi-account-circle-outline"></v-icon>
-            {{ playerName }}
+            {{ player.name }}
           </v-chip>
         </div>
       </transition-group>
